@@ -1,13 +1,22 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
+import { requestRouter } from "../../helpers/requestRouter";
 
-type Data = {
-  name: string
-}
+const postController = async (req: NextApiRequest, res: NextApiResponse) => {
+  res.json({ name: "Hello" });
+};
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
-  res.status(200).json({ name: 'John Doe' })
+  const router: {
+    [key: string]: (req: NextApiRequest, res: NextApiResponse) => Promise<any>;
+  } = {
+    POST: postController,
+    GET: postController,
+    PATCH: postController,
+    DELETE: postController,
+  };
+  await requestRouter(req, res, router);
 }
