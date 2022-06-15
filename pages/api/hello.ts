@@ -3,7 +3,16 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { requestRouter } from "../../helpers/requestRouter";
 
 const postController = async (req: NextApiRequest, res: NextApiResponse) => {
-  res.json({ name: "Hello" });
+  res.json({ name: "POST: Hello" });
+};
+const getController = async (req: NextApiRequest, res: NextApiResponse) => {
+  res.json({ name: "GET: Hello" });
+};
+const patchController = async (req: NextApiRequest, res: NextApiResponse) => {
+  res.json({ name: "PATCH: Hello" });
+};
+const deleteController = async (req: NextApiRequest, res: NextApiResponse) => {
+  res.json({ name: "DELETE: Hello" });
 };
 
 export default async function handler(
@@ -14,9 +23,9 @@ export default async function handler(
     [key: string]: (req: NextApiRequest, res: NextApiResponse) => Promise<any>;
   } = {
     POST: postController,
-    GET: postController,
-    PATCH: postController,
-    DELETE: postController,
+    GET: getController,
+    PATCH: patchController,
+    DELETE: deleteController,
   };
   await requestRouter(req, res, router);
 }
